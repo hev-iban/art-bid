@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import getProducts, getProduct, getRoutes
 
 urlpatterns = [
-    path('', views.getRoutes, name="routes"),
-    path('products/', views.getProducts, name="products"),
-    path('products/<str:pk>', views.getProduct, name="product"),
+    path('products/', getProducts, name="get-products"),   # ✅ Matches /api/products/
+    path('products/<str:pk>/', getProduct, name="get-product"),  # ✅ Matches /api/products/1/
+    path('routes/', getRoutes, name="api-routes"),  # ✅ Matches /api/routes/
 ]
