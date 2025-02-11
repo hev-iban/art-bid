@@ -118,6 +118,3 @@ git add .
 git commit -m "Resolved merge conflicts"
 git push origin feature-branch-name
 
-🎉 Congratulations! 🎉
-
-You’ve successfully contributed to a GitHub repository. Happy coding! 🚀
