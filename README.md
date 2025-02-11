@@ -1,120 +1,94 @@
-Contributing to an Existing GitHub Repository
+# Art-Bid
 
-Prerequisites
+Art-Bid is an online bidding system designed for art pieces. It consists of both backend and frontend components, working together to support the bidding process where users can view art pieces and place bids.
 
-Before you start contributing, ensure you have the following:
+## Repository Structure
 
-A GitHub account.
+- *backend/*: Contains the server-side code and logic for handling bids, user authentication, and database interactions.
+- *frontend/*: Contains the client-side code for the user interface, allowing users to view art pieces and place bids.
 
-Write access to the repository (You must be added as a collaborator).
+## Installation
 
-Git installed on your machine (Download Git).
+### Clone the Repository
 
-1. Accept the Repository Invitation
+To set up the project locally, follow these steps:
 
-If you haven’t already, follow these steps:
+1. Clone the repository:
 
-Open GitHub and go to GitHub Notifications.
+    
+    git clone https://github.com/hev-iban/art-bid.git
+    cd art-bid
+    
 
-Find the invitation to collaborate.
+### Set up the Backend
 
-Click "View invitation" and then "Accept".
+1. Navigate to the *backend* directory.
+2. Create a virtual environment and activate it:
 
-2. Clone the Repository
+    
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    
 
-Once you have access, clone the repository to your local machine:
+3. Install the required packages:
 
- git clone https://github.com/OWNER/REPO.git
+    
+    pip install -r requirements.txt
+    
 
- Replace OWNER with the repository owner's username and REPO with the repository name.
+### Set up the Frontend
 
-Navigate into the project folder:
+1. Navigate to the *frontend* directory.
+2. Install the necessary dependencies (if applicable):
 
-cd REPO
+    
+    npm install
+    
 
-3. Set Up Your Git Credentials (If Needed)
+## Usage
 
-If this is your first time using Git, configure your credentials:
+### Running the Backend
 
-git config --global user.name "Your Name"
-git config --global user.email "your-email@example.com"
+1. Navigate to the *backend* directory.
 
-4. Create a New Branch (Recommended)
+    
+    cd backend
+    
 
-It's best practice to create a separate branch for your changes:
+2. Start the backend server (use the appropriate command):
 
-git checkout -b feature-branch-name
+    
+    python app.py  # or the appropriate command to start your server
+    
 
-Replace feature-branch-name with a descriptive branch name (e.g., add-login-feature).
+### Running the Frontend
 
-5. Make Your Changes
+1. Navigate to the *frontend* directory.
 
-Edit files and make the necessary changes. Once done, check the status of your modifications:
+    
+    cd frontend
+    
 
-git status
+2. Start the frontend server:
 
-add your changes:
+    
+    npm start  # or the appropriate command to start your frontend server
+    
 
-git add .
+## Contributing
 
-commit your changes with a meaningful message:
+Contributions are welcome! Please follow these steps to contribute:
 
-git commit -m "Added a new feature for user login"
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your forked repository.
+5. Create a pull request.
 
-6. Push Your Changes to GitHub
+## Contact
 
-Push your branch to GitHub:
+For any inquiries or issues, please contact the repository owner at [your-email@example.com].
 
-git push origin feature-branch-name
+---
 
-7. Create a Pull Request (PR)
-
-After pushing, go to the repository on GitHub:
-
-Click "Compare & pull request".
-
-Add a title and description for your changes.
-
-Click "Create pull request".
-
-Wait for the repository owner to review and merge your changes.
-
-8. Updating Your Local Repository
-
-To keep your local copy updated, run:
-
-git checkout main
-git pull origin main
-
-If you're working on a branch, rebase it with the latest changes:
-
-git checkout main
-git pull origin main
-
-If you're working on a branch, rebase it with the latest changes:
-
-git checkout feature-branch-name
-git rebase main
-
-9. If You Have Direct Push Access
-
-If you have write access and need to push directly (not recommended for team projects):
-
-git push origin main
-
-⚠️ Be careful when pushing directly to main! Many projects require PRs instead.
-
-10. Troubleshooting
-
-Authentication Issues:
-
-If you face authentication issues, set up an SSH key (Guide) or use a personal access token.
-
-Merge Conflicts:
-
-If you encounter conflicts, resolve them manually and then run:
-
-git add .
-git commit -m "Resolved merge conflicts"
-git push origin feature-branch-name
-
+This README covers the basic setup and usage instructions for your project. Feel free to adjust the email or commands based on your specific setup.
