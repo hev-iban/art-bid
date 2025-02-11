@@ -1,3 +1,11 @@
+console.log("Application started.");
+console.log("Available scripts:");
+console.log("  npm start");
+console.log("  npm test");
+console.log("  npm run build");
+console.log("  npm run eject");
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
