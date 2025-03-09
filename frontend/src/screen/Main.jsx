@@ -1,25 +1,33 @@
+// src/screen/Main.jsx
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { ArtContext } from '../ArtContext'; // Import the ArtContext
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 function Main() {
-  return (
-    <Row xs={1} md={6 } className="g-4 bg-black">
-      {Array.from({ length: 4 }).map((_, idx) => (
-        <Col key={idx}>
-          <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                Si ashlee tinira ni gerome.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  );
+    const { artList } = useContext(ArtContext); // Get the artList from context
+
+    return (
+        <div className="bg-black">
+            <h1>Welcome to ArtBid</h1>
+            <Link to="/upload" className="btn btn-primary">Go to Upload</Link>
+            <Row xs={1} md={6} className="g-4">
+                {artList.map((art, idx) => (
+                    <Col key={idx}>
+                        <Card>
+                            <Card.Img variant="top" src={art.image} />
+                            <Card.Body>
+                                <Card.Title>Uploaded Art</Card.Title>
+                                <Card.Text>{art.description}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        </div>
+    );
 }
 
 export default Main;
