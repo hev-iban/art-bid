@@ -1,8 +1,9 @@
-# backend/forms.py
-from django import forms
-from .models import ArtUpload  # Change this line
+# forms.py
 
-class ArtUploadForm(forms.ModelForm):  # Change the class name
+from django import forms
+from .models import ArtUpload
+
+class ArtUploadForm(forms.ModelForm):
     class Meta:
-        model = ArtUpload  # Change this line
-        fields = ['image', 'description']
+        model = ArtUpload
+        fields = ['art_name', 'art_price', 'image', 'description']

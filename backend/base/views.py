@@ -25,20 +25,22 @@ def getArtUploads(request):
 @api_view(['POST'])
 def upload_art(request):
     if request.method == 'POST' and request.FILES.get('image'):
+        name = request.POST.get('name', '')
+        art_price = request.POST.get('art_price', '')
         image = request.FILES['image']
         description = request.POST.get('description', '')
 
-        # Save the file
-        fs = FileSystemStorage()
-        filename = fs.save(image.name, image)  # Save the file with its original name
-        file_url = fs.url(filename)  # This will give you the URL to access the file
-
-        # Log the file URL for debugging
-        print(f"Uploaded file URL: {file_url}")
-
         # Create a new ArtUpload instance
-        art_upload = ArtUpload(image=file_url, description=description)
+        art_upload = ArtUpload(
+            art_name=name,
+            art_price=art_price,
+            image=image,  # Save the image directly
+            description=description
+        )
         art_upload.save()
+
+        # Get the URL to access the uploaded image
+        file_url = art_upload.image.url  # This will give you the URL to access the file
 
         return JsonResponse({
             'message': 'Upload successful',
