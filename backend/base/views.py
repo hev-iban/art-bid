@@ -1,46 +1,28 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from base.products import products
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-def getProducts(request):
-    return JsonResponse(products, safe=False)
-
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        '/api/products/',
-        '/api/products/create/',
-
-        '/api/products/upload/',
-
-        '/api/products/<id>/reviews/',
-
-        '/api/products/top/',
-        '/api/products/<id>/',
-
-        '/api/products/delete/<id>/',
-        '/api/products/<update>/<id>',
-    ]
-    return Response(routes)
-
-@api_view(['GET'])
-def getProduct(request,pk):
-    product = None
-    
-    for i in products:
-        if i['_id'] == pk:
-            product = i
-            break
-    return Response(product)
-
 # backend/views.py
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import ArtUpload
+from .serializers import ArtUploadSerializer
+
+@api_view(['GET'])
+def getRoutes(request):
+    routes = [
+        'GET /api/art/uploads/',  # Route for getting uploads
+        'POST /api/art/upload/',   # Route for uploading art
+    ]
+    return Response(routes)
+
+@api_view(['GET'])
+def getArtUploads(request):
+    art_uploads = ArtUpload.objects.all()  # Retrieve all ArtUpload instances
+    serializer = ArtUploadSerializer(art_uploads, many=True)  # Serialize the data
+    return Response(serializer.data)  # Return the serialized data as a JSON response
 
 @csrf_exempt  # Use this for testing; consider using CSRF protection in production
+@api_view(['POST'])
 def upload_art(request):
     if request.method == 'POST' and request.FILES.get('image'):
         image = request.FILES['image']
@@ -48,10 +30,16 @@ def upload_art(request):
 
         # Save the file
         fs = FileSystemStorage()
-        filename = fs.save(image.name, image)
-        file_url = fs.url(filename)
+        filename = fs.save(image.name, image)  # Save the file with its original name
+        file_url = fs.url(filename)  # This will give you the URL to access the file
 
-        # Return a success response
+        # Log the file URL for debugging
+        print(f"Uploaded file URL: {file_url}")
+
+        # Create a new ArtUpload instance
+        art_upload = ArtUpload(image=file_url, description=description)
+        art_upload.save()
+
         return JsonResponse({
             'message': 'Upload successful',
             'file_url': file_url,

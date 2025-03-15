@@ -8,9 +8,9 @@ import Login from './screen/Login';
 import SignUp from './screen/SignUp';  // Add the SignUp import
 import Profile from './components/Profile/Profile'; // Import the Profile component
 import UploadScreen from './screen/UploadScreen';
-import { ArtProvider } from './ArtContext'; // Import the ArtProvider
+import { ArtProvider } from './ArtContext'; // Import the ArtProvider from './actions/productActions'; // Import the ArtProvider
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './bootstrap.min.css'; // Ensure this path is correct
 function App() {
   return (
     <ArtProvider> {/* Wrap the entire application with ArtProvider */}
