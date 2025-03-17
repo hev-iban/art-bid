@@ -49,8 +49,64 @@
     color: #ccc; /* Light gray text for the description */
 }
 
-.art-price {
+.art-price, .current-bid {
     font-size: 24px;
     font-weight: bold;
     color: #ffd700; /* Gold text for the price */
+}
+
+.bid-form {
+    margin-top: 20px;
+}
+
+.bid-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffffff; /* White text */
+}
+
+.bid-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #444; /* Add a border for better visibility */
+    border-radius: 5px;
+    background-color: #1a1a1a; /* Dark gray input background */
+    color: #ffffff; /* White text */
+    outline: none;
+}
+
+.bid-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff; /* Blue button */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.bid-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.bid-history {
+    margin-top: 20px;
+}
+
+.bid-history h3 {
+    font-size: 24px;
+    color: #ffd700; /* Gold text for the title */
+}
+
+.bid-history ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bid-history li {
+    font-size: 16px;
+    color: #ccc; /* Light gray text for the bids */
+    margin-bottom: 10px;
 }

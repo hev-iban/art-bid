@@ -6,7 +6,7 @@ const ArtUpload = () => {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState('');
     const [artName, setArtName] = useState('');
-    const [artPrice, setArtPrice] = useState('');
+    const [newBid, setNewBid] = useState(''); // Changed from artPrice to newBid
     const [message, setMessage] = useState('');
     const [imagePreview, setImagePreview] = useState(null); // State for image preview
     const navigate = useNavigate(); // Initialize useNavigate
@@ -27,34 +27,35 @@ const ArtUpload = () => {
         setArtName(e.target.value);
     };
 
-    const handleArtPriceChange = (e) => {
-        setArtPrice(e.target.value);
+    const handleNewBidChange = (e) => {
+        setNewBid(e.target.value); // Updated to handle newBid
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         const formData = new FormData();
-        formData.append('image', image);
-        formData.append('description', description);
         formData.append('name', artName);
-        formData.append('art_price', artPrice);
-
+        formData.append('new_bid', newBid); // Use new_bid instead of art_price
+        formData.append('description', description);
+        formData.append('image', image);
+    
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/art/upload/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            setMessage(response.data.message);
-
-            // Redirect to the main screen after 2 seconds
-            setTimeout(() => {
-                navigate('/'); // Redirect to the main screen
-            }, 2000); // Delay for 2 seconds to show the success message
+    
+            if (response.data.success) {
+                setMessage('Art uploaded successfully!');
+            } else {
+                setMessage('Upload failed: ' + response.data.message);
+            }
         } catch (error) {
             console.error('Error uploading art:', error);
             if (error.response) {
-                setMessage('Upload failed: ' + (error.response.data.error || 'Unknown error'));
+                setMessage('Upload failed: ' + (error.response.data.message || 'Unknown error'));
             } else {
                 setMessage('Upload failed: ' + error.message);
             }
@@ -75,9 +76,9 @@ const ArtUpload = () => {
                 />
                 <input
                     type="number"
-                    value={artPrice}
-                    onChange={handleArtPriceChange}
-                    placeholder="Art Price"
+                    value={newBid} // Updated to use newBid
+                    onChange={handleNewBidChange} // Updated to handle newBid
+                    placeholder="New Bid"
                     required
                     style={styles.input}
                 />
@@ -88,6 +89,7 @@ const ArtUpload = () => {
                     style={styles.fileInput}
                     accept="image/*" // Allow only image files
                 />
+                
                 {imagePreview && (
                     <div style={styles.imagePreviewContainer}>
                         <img

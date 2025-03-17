@@ -24,7 +24,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} /> {/* SignUp screen */}
             <Route path="/profile" element={<Profile />} /> {/* Profile screen */}
             <Route path="/upload" element={<UploadScreen />} /> {/* Upload screen */}
-            <Route path="/art/:id" element={<ArtDetails />} /> {/* Art details screen */}
+            <Route path="/art/:art_id" element={<ArtDetails />} />
           </Routes>
           <Footer />
         </div>
