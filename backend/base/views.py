@@ -31,7 +31,7 @@ def upload_art(request):
             new_bid = float(request.POST.get('new_bid', 0))  # Use new_bid instead of art_price
             description = request.POST.get('description', '')
             image = request.FILES.get('image')
-
+            print(image)
             if not image:
                 return JsonResponse({'success': False, 'message': 'No image file provided.'})
 
@@ -39,14 +39,14 @@ def upload_art(request):
             fs = FileSystemStorage()
             filename = fs.save(image.name, image)  # Save the file with its original name
             file_url = fs.url(filename)  # Get the URL to access the file
-
+            print(file_url)
             # Create a new ArtUpload instance
             art_upload = ArtUpload.objects.create(
                 art_name=name,
                 art_price=new_bid,  # Use new_bid as the starting price
                 current_bid=new_bid,  # Initialize current_bid with the new_bid
                 description=description,
-                image=file_url,
+                image=image,
             )
 
             # Return a success response
