@@ -11,7 +11,10 @@ import UploadScreen from './screen/UploadScreen';
 import { ArtProvider } from './ArtContext'; // Import the ArtProvider
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import ArtDetails from './screen/ArtDetails'; // Import the ArtDetails component
-
+import About from './components/About';
+import Contact from './components/Contact';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 function App() {
   return (
     <ArtProvider> {/* Wrap the entire application with ArtProvider */}
@@ -25,6 +28,10 @@ function App() {
             <Route path="/profile" element={<Profile />} /> {/* Profile screen */}
             <Route path="/upload" element={<UploadScreen />} /> {/* Upload screen */}
             <Route path="/art/:art_id" element={<ArtDetails />} />
+            <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           </Routes>
           <Footer />
         </div>
