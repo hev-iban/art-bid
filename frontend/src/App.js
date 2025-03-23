@@ -1,37 +1,52 @@
-// src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Main from './screen/Main';
-import Login from './screen/Login';
-import SignUp from './screen/SignUp'; // Add the SignUp import
-import Profile from './components/Profile/Profile'; // Import the Profile component
+import Profile from './components/Profile/Profile';
 import UploadScreen from './screen/UploadScreen';
-import { ArtProvider } from './ArtContext'; // Import the ArtProvider
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import ArtDetails from './screen/ArtDetails'; // Import the ArtDetails component
+import { ArtProvider } from './ArtContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ArtDetails from './screen/ArtDetails';
 import About from './components/About';
 import Contact from './components/Contact';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
+import AuthScreen from './screen/AuthScreen'; // Import the combined AuthScreen
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check if the user is authenticated (e.g., by checking localStorage for a token)
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
-    <ArtProvider> {/* Wrap the entire application with ArtProvider */}
+    <ArtProvider>
       <Router>
         <div className="app-container">
           <Header />
           <Routes>
-            <Route path="/" element={<Main />} /> {/* Main screen */}
-            <Route path="/login" element={<Login />} /> {/* Login screen */}
-            <Route path="/signup" element={<SignUp />} /> {/* SignUp screen */}
-            <Route path="/profile" element={<Profile />} /> {/* Profile screen */}
-            <Route path="/upload" element={<UploadScreen />} /> {/* Upload screen */}
+            {/* Redirect to AuthScreen if not authenticated */}
+            <Route
+              path="/"
+              element={isAuthenticated ? <Main /> : <Navigate to="/auth" />}
+            />
+            <Route
+              path="/auth"
+              element={<AuthScreen setIsAuthenticated={setIsAuthenticated} />}
+            />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/upload" element={<UploadScreen />} />
             <Route path="/art/:art_id" element={<ArtDetails />} />
             <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
           <Footer />
         </div>

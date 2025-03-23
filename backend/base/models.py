@@ -1,5 +1,6 @@
 # backend/models.py
 from django.db import models
+from django.contrib.auth.models import User 
 
 class ArtUpload(models.Model):
     art_id = models.AutoField(primary_key=True)
@@ -23,3 +24,10 @@ class Bid(models.Model):
     def __str__(self):
         return f"Bid of ${self.bid_amount} on {self.art.art_name}"
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username

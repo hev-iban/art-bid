@@ -110,3 +110,68 @@ def place_bid(request, art_id):
         return JsonResponse({'success': False, 'message': 'Art not found.'})
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework import status
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    email = request.data.get('email')
+
+    # Validate required fields
+    if not username or not password or not email:
+        return Response(
+            {'error': 'Please provide username, password, and email'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # Check if the username already exists
+    if User.objects.filter(username=username).exists():
+        return Response(
+            {'error': 'Username already exists'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # Create the user
+    user = User.objects.create_user(username=username, password=password, email=email)
+    return Response(
+        {'message': 'User registered successfully'},
+        status=status.HTTP_201_CREATED
+    )
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def user_login(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    # Validate required fields
+    if not username or not password:
+        return Response(
+            {'error': 'Please provide username and password'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # Authenticate the user
+    user = authenticate(username=username, password=password)
+    if user:
+        token, _ = Token.objects.get_or_create(user=user)  # Get or create a token for the user
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
+    else:
+        return Response(
+            {'error': 'Invalid credentials'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+@api_view(['POST'])
+def user_logout(request):
+    request.user.auth_token.delete()  # Delete the user's token
+    logout(request)
+    return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)

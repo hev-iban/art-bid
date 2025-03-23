@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 function Header() {
@@ -25,17 +24,20 @@ function Header() {
   const isAuthenticated = token && !isTokenExpired(token); // Check if token is valid
 
   const handleLogout = () => {
+    console.log('Logout initiated'); // Debug log
     try {
       localStorage.removeItem('authToken'); // Remove token on logout
-      console.log('User logged out successfully');
+      console.log('Token removed from localStorage'); // Debug log
     } catch (error) {
       console.error('Error during logout', error);
     }
-    navigate('/login'); // Redirect to login page
+    console.log('Redirecting to /auth'); // Debug log
+    navigate('/auth'); // Redirect to AuthScreen
   };
 
   // Automatically log out if token is expired
   if (!isAuthenticated && token) {
+    console.log('Token expired, logging out...'); // Debug log
     handleLogout();
   }
 
@@ -58,37 +60,11 @@ function Header() {
             <Nav.Link as={NavLink} to="/profile" style={{ color: 'white' }}>
               Profile
             </Nav.Link>
-            <NavDropdown
-              title={<span style={{ color: 'white' }}>Inventory</span>}
-              id="navbarScrollingDropdown"
-            >
-              <NavDropdown.Item href="#action3" style={{ color: 'white' }}>
-                Action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action4" style={{ color: 'white' }}>
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5" style={{ color: 'white' }}>
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
 
-            {/* Conditional Rendering for Authentication */}
-            {!isAuthenticated ? (
-              <>
-                <Nav.Link as={NavLink} to="/signup" style={{ color: 'white' }}>
-                  Sign Up
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/login" style={{ color: 'white' }}>
-                  Login
-                </Nav.Link>
-              </>
-            ) : (
-              <Nav.Link href="#" style={{ color: 'white' }} onClick={handleLogout}>
-                Logout
-              </Nav.Link>
-            )}
+            {/* Logout Button */}
+            <Nav.Link onClick={handleLogout} style={{ color: 'white', cursor: 'pointer' }}>
+              Logout
+            </Nav.Link>
           </Nav>
 
           {/* Search Bar */}
